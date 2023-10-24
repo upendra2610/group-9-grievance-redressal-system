@@ -1,6 +1,10 @@
 # group-9-grievance-redressal-system
 **Public Grievance Redressal System**
 
+**DB diagram**
+https://dbdiagram.io/d/Grievance-Redressal-System-65364edfffbf5169f040b5c5
+![Grievance Redressal System](https://github.com/Scaler-Projects/group-9-grievance-redressal-system/assets/44796715/99af0272-da25-43b1-8981-a5d33c95d22c)
+
 **Demba: User Management Service**
 1. Task 1: Set up Spring Boot project for User Management Service.
 1. Task 2: Design API contracts using OpenAPI.
@@ -49,7 +53,7 @@
 1. Task 9: Set up a distributed tracing system with Zipkin and Sleuth.
 1. Task 10: Write integration tests for event listening and notification sending.
 
-**Person 5: Analytics Service**
+**Basayya: Analytics Service**
 1. Task 1: Set up Spring Boot project for Analytics Service.
 1. Task 2: Design API contracts.
 1. Task 3: Implement API to generate various reports.
