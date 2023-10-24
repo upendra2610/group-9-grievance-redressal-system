@@ -5,6 +5,10 @@
 
 ![Grievance Redressal System (2)](https://github.com/Scaler-Projects/group-9-grievance-redressal-system/assets/44796715/beff5cb9-5dca-4025-b37c-f6003185436a)
 
+**Services**
+
+![image](https://github.com/Scaler-Projects/group-13-grievance-redressal-system/assets/44796715/198ec27d-53c9-49df-9ca5-4a2379608ad0)
+
 **Demba: User Management Service**
 1. Task 1: Set up Spring Boot project for User Management Service.
 1. Task 2: Design API contracts using OpenAPI.
