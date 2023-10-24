@@ -3,6 +3,7 @@
 
 **DB diagram**
 https://dbdiagram.io/d/Grievance-Redressal-System-65364edfffbf5169f040b5c5
+
 ![Grievance Redressal System](https://github.com/Scaler-Projects/group-9-grievance-redressal-system/assets/44796715/99af0272-da25-43b1-8981-a5d33c95d22c)
 
 **Demba: User Management Service**
