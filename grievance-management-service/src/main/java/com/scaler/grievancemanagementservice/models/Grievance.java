@@ -1,4 +1,34 @@
 package com.scaler.grievancemanagementservice.models;
 
-public class Grievance {
+import lombok.*;
+
+import javax.persistence.*;
+
+@Entity(name = "grievances")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Grievance extends BaseModel{
+
+    private String title;
+
+    private String description;
+
+    @Enumerated(value = EnumType.ORDINAL)
+    private GrievanceStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User assignee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private User createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "updated_by")
+    private User updatedBy;
+
+
 }
