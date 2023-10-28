@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface GrievanceService {
 
-    public GrievanceResponseDto createGrievance(GrievanceRequestDto grievanceRequestDto);
-    public void updateGrievance(GrievanceRequestDto grievanceRequestDto);
-    public void deleteGrievance(Long id);
-    public GrievanceResponseDto getGrievanceById(Long id);
-    public List<GrievanceResponseDto> getAllGrievances();
+     GrievanceResponseDto createGrievance(GrievanceRequestDto grievanceRequestDto);
+     void updateGrievance(GrievanceRequestDto grievanceRequestDto);
+     void deleteGrievance(Long id);
+     GrievanceResponseDto getGrievanceById(Long id);
+     List<GrievanceResponseDto> getAllGrievances();
 
-    public List<GrievanceResponseDto> getAllGrievancesByUserId(Long id);
+     List<GrievanceResponseDto> getAllGrievancesByUserId(Long id);
 
 
 }
