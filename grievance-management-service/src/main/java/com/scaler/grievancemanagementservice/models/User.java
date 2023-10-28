@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,6 +19,6 @@ public class User extends BaseModel{
     private Role role;
     private String email;
     private String phone;
-    private int created_at;
-    private int updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
