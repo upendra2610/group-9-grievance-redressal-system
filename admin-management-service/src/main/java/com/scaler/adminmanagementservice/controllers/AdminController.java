@@ -1,54 +1,48 @@
 package com.scaler.adminmanagementservice.controllers;
 
+import com.scaler.adminmanagementservice.dtos.AdminDto;
 import com.scaler.adminmanagementservice.dtos.GenericAdminDto;
+import com.scaler.adminmanagementservice.exceptions.AlreadyExistException;
+import com.scaler.adminmanagementservice.exceptions.NotFoundException;
 import com.scaler.adminmanagementservice.services.AdminService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/admins")
-public class AdminController implements AdminOperations{
+public class AdminController implements AdminOperations {
 
-    private AdminService adminService;
+    private final AdminService adminService;
 
-    public AdminController(AdminService adminService){
+    public AdminController(AdminService adminService) {
 
         this.adminService = adminService;
     }
 
 
-
-    @GetMapping("{id}")
-    public GenericAdminDto getAdminById(@PathVariable("id") Long id) {
-
+    public GenericAdminDto getAdminById(Long id) throws NotFoundException {
         return adminService.getAdminById(id);
     }
 
 
-    @GetMapping
-    public List<GenericAdminDto> getAllAdmins(){
-
+    public List<GenericAdminDto> getAllAdmins() {
         return adminService.getAllAdmins();
     }
 
-
-    @PostMapping
-    public GenericAdminDto createAdmin(@RequestBody GenericAdminDto admin) {
-
-        return adminService.createAdmin(admin);
+    public ResponseEntity<String> createAdmin(AdminDto adminDto) throws AlreadyExistException {
+        adminService.createAdmin(adminDto);
+        return new ResponseEntity<>("New admin created successfully", HttpStatus.OK);
     }
 
-
-    @DeleteMapping("{id}")
-    public GenericAdminDto deleteAdmin(@PathVariable("id") Long id){
-
+    public ResponseEntity<String> deleteAdmin(Long id) throws NotFoundException {
         return adminService.deleteAdminById(id);
     }
 
-
-    @PutMapping("{id}")
-    public GenericAdminDto updateById(@PathVariable("id") Long id,@RequestBody GenericAdminDto admin){
-        return adminService.updateProduct(id,admin);
+    public ResponseEntity<String> updateAdminById(Long id, AdminDto adminDto) throws NotFoundException {
+        return adminService.updateAdmin(id, adminDto);
     }
 }

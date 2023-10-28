@@ -1,13 +1,13 @@
-package com.scaler.adminmanagementservice.models;
-
+package com.scaler.adminmanagementservice.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AdminModel {
+public class AdminDto {
     private Long id;
     private String name;
     private String email;
+    private String password;
 }
