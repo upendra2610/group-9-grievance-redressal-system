@@ -2,10 +2,9 @@ package com.scaler.adminmanagementservice.services;
 
 import com.scaler.adminmanagementservice.dtos.AdminDto;
 import com.scaler.adminmanagementservice.dtos.GenericAdminDto;
-import com.scaler.adminmanagementservice.exceptions.AlreadyExistException;
 import com.scaler.adminmanagementservice.exceptions.NotFoundException;
-import com.scaler.adminmanagementservice.models.Admin;
-import com.scaler.adminmanagementservice.repository.AdminRepository;
+import com.scaler.adminmanagementservice.modals.User;
+import com.scaler.adminmanagementservice.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,102 +13,102 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class AdminServiceImplementation implements AdminService {
 
-    private final AdminRepository adminRepository;
+    private final UserRepository userRepository;
 
-    public AdminServiceImplementation(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
+    public AdminServiceImplementation(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    private Admin convertToAdmin(AdminDto adminDto) {
-        Admin admin = new Admin();
-        admin.setId(adminDto.getId());
-        admin.setName(adminDto.getName());
-        admin.setPassword((adminDto.getPassword()));
-        admin.setEmail(adminDto.getEmail());
-        return admin;
-    }
-
-    private AdminDto convertToAdminDto(Admin admin) {
-        AdminDto adminDto = new AdminDto();
-        adminDto.setId(admin.getId());
-        adminDto.setName(admin.getName());
-        adminDto.setPassword((admin.getPassword()));
-        adminDto.setEmail(admin.getEmail());
-        return adminDto;
-    }
-
-
-    private GenericAdminDto convertToGenericAdminDto(Admin admin) {
+    private GenericAdminDto convertToGenericAdminDto(User user) {
         GenericAdminDto genericAdminDto = new GenericAdminDto();
-        genericAdminDto.setId(admin.getId());
-        genericAdminDto.setName(admin.getName());
-        genericAdminDto.setEmail(admin.getEmail());
+        genericAdminDto.setEmail(user.getEmail());
+        genericAdminDto.setUserName(user.getUsername());
+        genericAdminDto.setPhone(user.getPhone());
+        genericAdminDto.setCreatedAt(user.getCreated_at());
+        genericAdminDto.setUpdatedAt(user.getUpdated_at());
+
         return genericAdminDto;
+
     }
 
+    private User convertToUser(AdminDto adminDto) {
+        User user = new User();
+        user.setUsername(adminDto.getUsername());
+        user.setPhone(adminDto.getPhone());
+        user.setEmail(adminDto.getEmail());
+        user.setUpdated_at(adminDto.getUpdated_at());
+        user.setCreated_at(adminDto.getCreated_at());
+        user.setPassword(adminDto.getPassword());
+        user.setRole(0L);
 
+        return user;
+    }
+
+    @Override
     public GenericAdminDto getAdminById(Long id) throws NotFoundException {
-        Optional<Admin> admin = adminRepository.findById(id);
-
-        if (admin.isPresent()) {
-            return convertToGenericAdminDto(admin.get());
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return convertToGenericAdminDto(user.get());
         }
         throw new NotFoundException("Admin with id:" + id + " " + "doesn't exist");
     }
 
-
+    @Override
     public List<GenericAdminDto> getAllAdmins() {
-        List<GenericAdminDto> genericAdmins = new ArrayList<>();
-        List<Admin> admins = adminRepository.findAll();
+        List<GenericAdminDto> genericAdminDtos = new ArrayList<>();
+        List<User> users = userRepository.findAll();
 
-        for (Admin a : admins) {
-            GenericAdminDto adminDto = new GenericAdminDto();
-            adminDto.setId(a.getId());
-            adminDto.setEmail(a.getEmail());
-            adminDto.setName(a.getName());
-            genericAdmins.add(adminDto);
+        for (User u : users) {
+            GenericAdminDto genericAdminDto = new GenericAdminDto();
+            genericAdminDto.setUserName(u.getUsername());
+            genericAdminDto.setEmail(u.getEmail());
+            genericAdminDto.setPhone(u.getPhone());
+            genericAdminDto.setUpdatedAt(u.getUpdated_at());
+            genericAdminDto.setCreatedAt(u.getCreated_at());
+            genericAdminDtos.add(genericAdminDto);
+
         }
-        return genericAdmins;
+        return genericAdminDtos;
     }
 
+    @Override
+    public ResponseEntity<String> createAdmin(AdminDto adminDto) {
+        User user = convertToUser(adminDto);
+        userRepository.save(user);
+        return new ResponseEntity<>("Admin created successfully", HttpStatus.CREATED);
 
-    public AdminDto createAdmin(AdminDto adminDto) throws AlreadyExistException {
-        Admin admin = convertToAdmin(adminDto);
-        if (!adminRepository.existsAdminByEmail(admin.getEmail())) {
-            return convertToAdminDto(adminRepository.save(admin));
+    }
+
+    @Override
+    public ResponseEntity<String> updateAdmin(Long id, AdminDto adminDto) throws NotFoundException {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isPresent()) {
+            User newUser = user.get();
+            newUser.setPassword(adminDto.getPassword());
+            newUser.setUsername(adminDto.getUsername());
+            newUser.setEmail(adminDto.getEmail());
+            newUser.setPhone(adminDto.getPhone());
+            newUser.setUpdated_at(adminDto.getUpdated_at());
+            newUser.setCreated_at(adminDto.getCreated_at());
+            return new ResponseEntity<>("Updated successfully", HttpStatus.NO_CONTENT);
         }
-        throw new AlreadyExistException("Email already exist");
+        throw new NotFoundException("Admin with id: " + id + " not found to update");
 
 
     }
 
+    @Override
+    public ResponseEntity<String> deleteAdmninById(Long id) throws NotFoundException {
+        Optional<User> user = userRepository.findById(id);
 
-    public ResponseEntity<String> deleteAdminById(Long id) throws NotFoundException {
-        Optional<Admin> admin = adminRepository.findById(id);
-
-        if (admin.isPresent()) {
-            adminRepository.deleteById(id);
+        if (user.isPresent()) {
+            userRepository.deleteById(id);
             return new ResponseEntity<>("Admin with id: " + id + " deleted", HttpStatus.OK);
         }
         throw new NotFoundException("Admin with id: " + id + " doesn't exist");
-    }
-
-
-    public ResponseEntity<String> updateAdmin(Long id, AdminDto adminDto) throws NotFoundException {
-        Optional<Admin> admin = adminRepository.findById(id);
-
-        if (admin.isPresent()) {
-            Admin newAdmin = admin.get();
-            newAdmin.setName(adminDto.getName());
-            newAdmin.setPassword(adminDto.getPassword());
-            newAdmin.setEmail(adminDto.getEmail());
-            adminRepository.save(newAdmin);
-            return new ResponseEntity<>("Updated successfully", HttpStatus.ACCEPTED);
-        }
-        throw new NotFoundException("Admin with id: " + id + " not found to update");
     }
 }

@@ -2,28 +2,28 @@ package com.scaler.adminmanagementservice.controllers;
 
 import com.scaler.adminmanagementservice.dtos.AdminDto;
 import com.scaler.adminmanagementservice.dtos.GenericAdminDto;
-import com.scaler.adminmanagementservice.exceptions.AlreadyExistException;
 import com.scaler.adminmanagementservice.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RequestMapping("/admins")
 public interface AdminOperations {
-    @GetMapping("{id}")
-    public GenericAdminDto getAdminById(@PathVariable("id") Long id) throws NotFoundException;
 
-    @GetMapping
-    public List<GenericAdminDto> getAllAdmins();
+    @GetMapping("{id}")
+    GenericAdminDto getAdminById(@PathVariable("id") Long id) throws NotFoundException;
+
+    @GetMapping()
+    List<GenericAdminDto> getAllAdmins();
 
     @PostMapping()
-    public ResponseEntity<String> createAdmin(@RequestBody AdminDto admin) throws AlreadyExistException, AlreadyExistException;
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteAdmin(@PathVariable("id") Long id) throws NotFoundException;
+    ResponseEntity<String> createAdmin(@RequestBody AdminDto adminDto);
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateAdminById(@PathVariable("id") Long id, @RequestBody AdminDto admin) throws NotFoundException;
+    ResponseEntity<String> updateAdmin(@PathVariable("id") Long id, @RequestBody AdminDto adminDto) throws NotFoundException;
+
+    @DeleteMapping("{id}")
+    ResponseEntity<String> deleteAdminById(@PathVariable("id") Long id) throws NotFoundException;
+
 }

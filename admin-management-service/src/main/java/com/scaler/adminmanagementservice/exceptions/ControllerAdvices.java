@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+
 @ControllerAdvice
 public class ControllerAdvices {
     @ExceptionHandler(NotFoundException.class)
@@ -16,14 +17,4 @@ public class ControllerAdvices {
 
         );
     }
-
-    @ExceptionHandler(AlreadyExistException.class)
-    public ResponseEntity<ExceptionDto> alreadyExistException(AlreadyExistException alreadyExistException) {
-        return new ResponseEntity<>(
-                new ExceptionDto(HttpStatus.NOT_ACCEPTABLE, alreadyExistException.getMessage()),
-                HttpStatus.NOT_ACCEPTABLE
-        );
-    }
 }
-
-

@@ -2,7 +2,6 @@ package com.scaler.adminmanagementservice.services;
 
 import com.scaler.adminmanagementservice.dtos.AdminDto;
 import com.scaler.adminmanagementservice.dtos.GenericAdminDto;
-import com.scaler.adminmanagementservice.exceptions.AlreadyExistException;
 import com.scaler.adminmanagementservice.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 
@@ -13,10 +12,9 @@ public interface AdminService {
 
     List<GenericAdminDto> getAllAdmins();
 
-    AdminDto createAdmin(AdminDto adminDto) throws AlreadyExistException;
+    ResponseEntity<String> createAdmin(AdminDto adminDto);
 
-    ResponseEntity<String> deleteAdminById(Long id) throws NotFoundException;
+    ResponseEntity<String> updateAdmin(Long id , AdminDto adminDto) throws NotFoundException;
 
-    ResponseEntity<String> updateAdmin(Long id, AdminDto adminDto) throws NotFoundException;
-
+    ResponseEntity<String> deleteAdmninById(Long id) throws NotFoundException;
 }
