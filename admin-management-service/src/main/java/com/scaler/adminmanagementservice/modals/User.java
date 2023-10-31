@@ -1,5 +1,4 @@
-package com.scaler.adminmanagementservice.models;
-
+package com.scaler.adminmanagementservice.modals;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,16 +8,22 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
-public class Admin {
+@Entity(name = "user")
+public class User {
     @Id
     @GeneratedValue(generator = "idgenerator")
     @GenericGenerator(name = "idgenerator", strategy = "increment")
     private Long id;
 
-    private String name;
+//    @Column(unique = true)
+    private String username;
 
-    @Column(unique=true)
-    private String email;
+//    @Column(unique = true)
     private String password;
+
+    private String phone;
+    private String email;
+    private Long role;
+    private Long created_at;
+    private Long updated_at;
 }
