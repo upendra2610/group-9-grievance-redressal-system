@@ -23,7 +23,7 @@ public class User {
 
     private String phone;
     private String email;
-    private Long role;
+    private Role role;
     private Long created_at;
     private Long updated_at;
 }
