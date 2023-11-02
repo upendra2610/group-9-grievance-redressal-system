@@ -28,7 +28,7 @@ public class AdminController implements AdminOperations {
     }
 
     @Override
-    public ResponseEntity<String> createAdmin(AdminDto adminDto)  {
+    public ResponseEntity<String> createAdmin(AdminDto adminDto) {
         return adminService.createAdmin(adminDto);
     }
 
