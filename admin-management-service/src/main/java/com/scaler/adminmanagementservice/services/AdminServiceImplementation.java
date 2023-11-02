@@ -7,6 +7,7 @@ import com.scaler.adminmanagementservice.helper.ConvertTime;
 import com.scaler.adminmanagementservice.modals.Role;
 import com.scaler.adminmanagementservice.modals.User;
 import com.scaler.adminmanagementservice.repository.UserRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class AdminServiceImplementation implements AdminService {
     @Override
     public List<GenericAdminDto> getAllAdmins() {
         List<GenericAdminDto> genericAdminDtos = new ArrayList<>();
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllAdmins();
 
         for (User u : users) {
             GenericAdminDto genericAdminDto = new GenericAdminDto();
