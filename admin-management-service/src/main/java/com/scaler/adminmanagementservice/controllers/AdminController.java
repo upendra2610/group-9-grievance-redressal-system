@@ -5,7 +5,6 @@ import com.scaler.adminmanagementservice.dtos.GenericAdminDto;
 import com.scaler.adminmanagementservice.exceptions.NotFoundException;
 import com.scaler.adminmanagementservice.services.AdminService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
