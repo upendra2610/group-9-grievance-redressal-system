@@ -8,7 +8,6 @@ import com.scaler.usermanagementservice.models.Role;
 import com.scaler.usermanagementservice.models.User;
 import com.scaler.usermanagementservice.repositories.RoleRepository;
 import com.scaler.usermanagementservice.repositories.UserRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -107,7 +106,7 @@ public class UserServiceImpl implements UserService {
         adminUser.setPhone("5555555555555");
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
-        adminUser.setRole(adminRoles);
+        adminUser.setRoles(adminRoles);
         adminUser.setCreated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
         adminUser.setUpdated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
 
@@ -120,7 +119,7 @@ public class UserServiceImpl implements UserService {
         defaultUser.setPhone("44444444444444");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
-        defaultUser.setRole(userRoles);
+        defaultUser.setRoles(userRoles);
         defaultUser.setCreated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
         defaultUser.setUpdated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
 

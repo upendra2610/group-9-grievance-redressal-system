@@ -21,7 +21,7 @@ public class UserDto {
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
-        userDto.setRole(user.getRole().toString());
+        userDto.setRole(user.getRoles().toString());
         userDto.setEmail(user.getEmail());
         userDto.setPhone(user.getPhone());
         userDto.setCreated_at(user.getCreated_at());

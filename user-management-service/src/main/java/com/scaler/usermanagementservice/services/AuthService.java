@@ -48,7 +48,7 @@ public class AuthService {
         user.setPhone(signupDto.getPhone());
         user.setEmail(signupDto.getEmail());
         Set<Role> roles = new HashSet<>();
-        user.setRole(roles);// comment
+        user.setRoles(roles);// comment
         user.setCreated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
         user.setUpdated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
 
