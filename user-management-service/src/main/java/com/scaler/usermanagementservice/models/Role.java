@@ -14,4 +14,11 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class Role extends BaseModel {
     private String name;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

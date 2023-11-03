@@ -27,4 +27,15 @@ public class User extends BaseModel {
     private String phone;
     private Long created_at;
     private Long updated_at;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
