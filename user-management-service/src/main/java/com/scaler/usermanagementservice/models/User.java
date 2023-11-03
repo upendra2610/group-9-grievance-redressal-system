@@ -19,7 +19,7 @@ public class User extends BaseModel {
     private String username;
     private String password;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Role role;
     private String email;
     private String phone;
