@@ -6,21 +6,31 @@ import com.scaler.usermanagementservice.exceptions.NotFoundException;
 import com.scaler.usermanagementservice.helpers.Convert;
 import com.scaler.usermanagementservice.models.Role;
 import com.scaler.usermanagementservice.models.User;
+import com.scaler.usermanagementservice.repositories.RoleRepository;
 import com.scaler.usermanagementservice.repositories.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository
-    ) {
+    public UserServiceImpl(UserRepository userRepository,
+                           RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -79,14 +89,25 @@ public class UserServiceImpl implements UserService {
         user.setUpdated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
     }
 
+    @Transactional
     @Override
     public void initUsers() {
+        Role adminRole = new Role();
+        adminRole.setName("Admin");
+        roleRepository.save(adminRole);
+
+        Role userRole = new Role();
+        userRole.setName("User");
+        roleRepository.save(userRole);
+
         User adminUser = new User();
         adminUser.setUsername("superAdmin");
         adminUser.setEmail("superAdmin@email.com");
-        adminUser.setPassword("admin123");
+        adminUser.setPassword(passwordEncoder.encode("admin123"));
         adminUser.setPhone("5555555555555");
-        adminUser.setRole(Role.ADMIN);
+        Set<Role> adminRoles = new HashSet<>();
+        adminRoles.add(adminRole);
+        adminUser.setRole(adminRoles);
         adminUser.setCreated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
         adminUser.setUpdated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
 
@@ -95,9 +116,11 @@ public class UserServiceImpl implements UserService {
         User defaultUser = new User();
         defaultUser.setUsername("defaultUser");
         defaultUser.setEmail("defaultUser@email.com");
-        defaultUser.setPassword("default123");
+        defaultUser.setPassword(passwordEncoder.encode("default123"));
         defaultUser.setPhone("44444444444444");
-        defaultUser.setRole(Role.USER);
+        Set<Role> userRoles = new HashSet<>();
+        userRoles.add(userRole);
+        defaultUser.setRole(userRoles);
         defaultUser.setCreated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
         defaultUser.setUpdated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
 
