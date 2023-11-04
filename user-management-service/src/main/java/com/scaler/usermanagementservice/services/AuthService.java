@@ -40,14 +40,13 @@ public class AuthService {
             throw new UsernameAlreadyExistsException("Username already exists.");
         }
 
-        Role userRole = roleRepository.findRoleByName("USER").get();
-
         User user = new User();
         user.setUsername(signupDto.getUsername());
         user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         user.setPhone(signupDto.getPhone());
         user.setEmail(signupDto.getEmail());
         Set<Role> roles = new HashSet<>();
+        roles.add(findUserRole());
         user.setRoles(roles);// comment
         user.setCreated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
         user.setUpdated_at(Convert.localDateTimeToLong(LocalDateTime.now()));
@@ -64,8 +63,23 @@ public class AuthService {
             throw new UsernameNotFoundException("User not found");
         }
 
+        Set<Role> roles = new HashSet<>();
         User user = optionalUser.get();
-        //user.setRole(userRoleDto.getRole());
+        Role role = findUserRole();
+        roles.add(role);
+        user.setRoles(roles);
         userRepository.save(user);
+    }
+
+    private Role findUserRole() {
+        Optional<Role> optionalRole = roleRepository.findRoleByName("User");
+        Role role;
+        if (optionalRole.isEmpty()) {
+            role = new Role("User");
+            roleRepository.save(role);
+        } else {
+            role = optionalRole.get();
+        }
+        return role;
     }
 }
