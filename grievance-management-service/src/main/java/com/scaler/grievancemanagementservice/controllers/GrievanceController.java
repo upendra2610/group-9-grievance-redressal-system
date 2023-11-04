@@ -4,9 +4,12 @@ import com.scaler.grievancemanagementservice.dtos.GrievanceRequestDto;
 import com.scaler.grievancemanagementservice.dtos.GrievanceResponseDto;
 import com.scaler.grievancemanagementservice.services.GrievanceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -17,8 +20,8 @@ public class GrievanceController implements GrievanceOperations{
     public final GrievanceService grievanceService;
 
     @Override
-    public List<GrievanceResponseDto> getAllGrievances() {
-        return grievanceService.getAllGrievances();
+    public List<GrievanceResponseDto> getAllGrievancesByPage( Integer pageNo, Integer pageSize) {
+        return grievanceService.getAllGrievancesPaginated(pageNo,pageSize);
     }
 
     @Override
@@ -27,8 +30,8 @@ public class GrievanceController implements GrievanceOperations{
     }
 
     @Override
-    public void createGrievance(GrievanceRequestDto grievance) {
-         grievanceService.createGrievance(grievance);
+    public ResponseEntity<GrievanceResponseDto> createGrievance(GrievanceRequestDto grievance) {
+        return new ResponseEntity<>(grievanceService.createGrievance(grievance), HttpStatus.CREATED);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class GrievanceController implements GrievanceOperations{
     }
 
     @Override
-    public void update(GrievanceRequestDto grievanceRequestDto) {
-         grievanceService.updateGrievance(grievanceRequestDto);
+    public GrievanceResponseDto update(GrievanceRequestDto grievanceRequestDto, Long id){
+        return grievanceService.updateGrievance(grievanceRequestDto,id);
     }
 }

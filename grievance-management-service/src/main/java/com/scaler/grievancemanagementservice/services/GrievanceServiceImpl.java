@@ -8,6 +8,9 @@ import com.scaler.grievancemanagementservice.models.User;
 import com.scaler.grievancemanagementservice.repositories.GrievanceRepository;
 import com.scaler.grievancemanagementservice.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,13 +36,16 @@ public class GrievanceServiceImpl implements GrievanceService{
     }
 
     @Override
-    public void updateGrievance(GrievanceRequestDto grievanceRequestDto) {
-        Optional<Grievance> grievanceOptional = grievanceRepository.findById(grievanceRequestDto.getGrievanceId());
+    public GrievanceResponseDto updateGrievance(GrievanceRequestDto grievanceRequestDto,Long id) {
+        Optional<Grievance> grievanceOptional = grievanceRepository.findById(id);
         if(grievanceOptional.isPresent()){
             Grievance grievance = grievanceOptional.get();
             grievance.setTitle(grievanceRequestDto.getGrievanceTitle());
             grievance.setDescription(grievanceRequestDto.getGrievanceDescription());
-            grievanceRepository.save(grievance);
+            Grievance updatedGrievance = grievanceRepository.save(grievance);
+            return convertGrievanceToGrievanceResponseDto(updatedGrievance) ;
+        }else{
+            return null;
         }
     }
 
@@ -54,8 +60,9 @@ public class GrievanceServiceImpl implements GrievanceService{
         return grievance.map(this::convertGrievanceToGrievanceResponseDto).orElse(null);
     }
     @Override
-    public List<GrievanceResponseDto> getAllGrievances() {
-        List<Grievance> grievances = grievanceRepository.findAll();
+    public List<GrievanceResponseDto> getAllGrievancesPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Grievance> grievances = grievanceRepository.findAll(pageable);
         return grievances.stream().map(this::convertGrievanceToGrievanceResponseDto).collect(Collectors.toList());
     }
 

@@ -9,10 +9,10 @@ import java.util.List;
 public interface GrievanceService {
 
      GrievanceResponseDto createGrievance(GrievanceRequestDto grievanceRequestDto);
-     void updateGrievance(GrievanceRequestDto grievanceRequestDto);
+     GrievanceResponseDto updateGrievance(GrievanceRequestDto grievanceRequestDto,Long id);
      void deleteGrievance(Long id);
      GrievanceResponseDto getGrievanceById(Long id);
-     List<GrievanceResponseDto> getAllGrievances();
+     List<GrievanceResponseDto> getAllGrievancesPaginated(int pageNo, int pageSize);
 
      List<GrievanceResponseDto> getAllGrievancesByUserId(Long id);
 
