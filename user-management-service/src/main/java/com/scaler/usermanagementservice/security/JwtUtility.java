@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.*;
@@ -18,6 +17,8 @@ import java.util.function.Function;
 //@Component
 public class JwtUtility {
 
+    // TODO: Add token_validity variable to  application.properties
+    // TODO: Add a second variable for token_validity in milliseconds
     private static final int TOKEN_VALIDITY = 3600 * 5;
     private static final Key KEY = Keys.hmacShaKeyFor(UUID.randomUUID().toString().getBytes());
 

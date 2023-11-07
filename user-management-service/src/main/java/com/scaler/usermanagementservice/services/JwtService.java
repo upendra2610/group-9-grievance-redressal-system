@@ -7,6 +7,7 @@ import com.scaler.usermanagementservice.models.User;
 import com.scaler.usermanagementservice.repositories.UserRepository;
 import com.scaler.usermanagementservice.security.JwtUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -24,11 +25,13 @@ import java.util.Set;
 @Service
 public class JwtService implements UserDetailsService {
     private final UserRepository userRepository;
-
     @Autowired
-    private AuthenticationManager authenticationManager;
+    @Lazy
+    public AuthenticationManager authenticationManager;
+
     private final Cache<String, String> tokenCache;
 
+    @Autowired
     public JwtService(UserRepository userRepository,
                       Cache<String, String> tokenCache) {
         this.userRepository = userRepository;
