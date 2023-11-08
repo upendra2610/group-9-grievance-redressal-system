@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping({"/setUserRole"})
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<Void> setUserRole(@RequestBody UserRoleDto userRoleDto) {
         authService.setUserRole(userRoleDto);
         return new ResponseEntity<>(HttpStatus.OK);
