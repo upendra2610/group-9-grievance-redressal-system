@@ -9,7 +9,7 @@ import java.util.List;
 public interface AdminService {
     GenericAdminDto getAdminById(Long id) throws NotFoundException;
 
-    List<GenericAdminDto> getAllAdmins();
+    List<GenericAdminDto> getAllAdmins() throws NotFoundException;
 
     GenericAdminDto createAdmin(AdminDto adminDto);
 

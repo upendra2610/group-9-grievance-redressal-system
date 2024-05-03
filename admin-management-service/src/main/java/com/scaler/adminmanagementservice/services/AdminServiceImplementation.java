@@ -58,9 +58,13 @@ public class AdminServiceImplementation implements AdminService {
     }
 
     @Override
-    public List<GenericAdminDto> getAllAdmins() {
+    public List<GenericAdminDto> getAllAdmins() throws NotFoundException {
         List<GenericAdminDto> genericAdminDtos = new ArrayList<>();
         List<User> users = userRepository.findAllAdmins();
+
+        if(users.isEmpty()){
+            throw new NotFoundException("No admins are there");
+        }
 
         for (User u : users) {
             GenericAdminDto genericAdminDto = new GenericAdminDto();

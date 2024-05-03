@@ -15,7 +15,7 @@ public interface AdminOperations {
     GenericAdminDto getAdminById(@PathVariable("id") Long id) throws NotFoundException;
 
     @GetMapping()
-    List<GenericAdminDto> getAllAdmins();
+    List<GenericAdminDto> getAllAdmins() throws NotFoundException;
 
     @PostMapping()
     ResponseEntity<GenericAdminDto> createAdmin(@RequestBody AdminDto adminDto);

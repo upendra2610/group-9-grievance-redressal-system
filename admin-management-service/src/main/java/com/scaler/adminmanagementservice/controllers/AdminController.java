@@ -25,7 +25,7 @@ public class AdminController implements AdminOperations {
     }
 
     @Override
-    public List<GenericAdminDto> getAllAdmins() {
+    public List<GenericAdminDto> getAllAdmins() throws NotFoundException {
         return adminService.getAllAdmins();
     }
 
